@@ -100,7 +100,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("] ");
   char data[10];
   int i=0;
-  while ((i<10) && (i<length)) {
+  while ((i<9) && (i<length)) {
     data[i]=(char)payload[i];
     i++;
   }
@@ -116,9 +116,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+//  while (!Serial) {
+//    ; // wait for serial port to connect. Needed for native USB port only
+//  }
+  delay(50); // wait for Serial
 
   pinMode(ledPin, OUTPUT);
   initWiFi();
@@ -144,9 +145,8 @@ void setup() {
   }
 }
 
-int setMeter(uint8_t strength) {
- // Serial.print("Strength:"); Serial.println(strength);
-  analogWrite(ledPin, map(strength, 20, 100, 5, 145));
+int setMeter(uint8_t temp) {
+  analogWrite(ledPin, map(temp, 20, 100, 5, 145));
 }
 
 int delta = 1;
